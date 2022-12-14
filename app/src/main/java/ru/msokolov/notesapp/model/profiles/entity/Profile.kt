@@ -1,4 +1,4 @@
-package ru.msokolov.notesapp
+package ru.msokolov.notesapp.model.profiles.entity
 
 import androidx.room.Entity
 
