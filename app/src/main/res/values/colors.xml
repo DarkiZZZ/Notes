@@ -7,4 +7,16 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    //notes colors:
+
+    <color name="note_title">#f3de85</color>
+    <color name="note_text">#fcf8df</color>
+
+    //priority colors:
+
+    <color name="light_red">#FF2B2B</color>
+    <color name="yellow">#FFFF00</color>
+    <color name="pale_green">#4CAF50</color>
+    <color name="button_color">#E1CE7D</color>
 </resources>
