@@ -23,5 +23,5 @@ interface NoteItemsDao {
     suspend fun delete(noteItemDbEntity: NoteItemDbEntity)
 
     @Query("SELECT * FROM note_items_table")
-    fun getAllProfiles(): LiveData<List<NoteItemDbEntity>>
+    fun getAllNoteItems(): LiveData<List<NoteItemDbEntity>>
 }

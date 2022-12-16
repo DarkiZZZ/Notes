@@ -3,7 +3,6 @@ package ru.msokolov.notesapp.model.noteitems.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import ru.msokolov.notesapp.model.noteitems.entities.NoteItem
 
 @Entity(tableName = "note_items_table")
 data class NoteItemDbEntity(
