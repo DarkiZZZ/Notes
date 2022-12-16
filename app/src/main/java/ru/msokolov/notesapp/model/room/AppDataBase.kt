@@ -2,10 +2,10 @@ package ru.msokolov.notesapp.model.room
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import ru.msokolov.notesapp.model.noteitems.room.NoteItemsDao
-import ru.msokolov.notesapp.model.notes.room.NotesDao
-import ru.msokolov.notesapp.model.profiles.room.ProfilesDao
-import ru.msokolov.notesapp.model.profiles.room.entity.ProfileDbEntity
+import ru.msokolov.notesapp.model.noteitems.NoteItemsDao
+import ru.msokolov.notesapp.model.notes.NotesDao
+import ru.msokolov.notesapp.model.profiles.ProfilesDao
+import ru.msokolov.notesapp.model.profiles.entities.ProfileDbEntity
 
 @Database(
     version = 1,

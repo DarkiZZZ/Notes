@@ -1,4 +1,4 @@
-package ru.msokolov.notesapp.model.profiles.entity
+package ru.msokolov.notesapp.model.profiles.entities
 
 data class Profile(
     val id: Long,

@@ -1,4 +1,4 @@
-package ru.msokolov.notesapp.model.noteitems.entity
+package ru.msokolov.notesapp.model.noteitems.entities
 
 data class NoteItem(
     val id: Long,
