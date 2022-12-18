@@ -2,11 +2,7 @@ package ru.msokolov.notesapp.model.noteitems
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import kotlinx.coroutines.flow.Flow
-import ru.msokolov.notesapp.model.noteitems.entities.NoteItem
 import ru.msokolov.notesapp.model.noteitems.entities.NoteItemDbEntity
-import ru.msokolov.notesapp.model.profiles.entities.ProfileDbEntity
-
 @Dao
 interface NoteItemsDao {
 

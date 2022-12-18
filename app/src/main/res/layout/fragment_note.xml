@@ -22,26 +22,22 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:background="@drawable/profile_show_gym"
+            tools:background="#F4E68C"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-            <ImageView
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:src="@drawable/ic_back_button_white"/>
+
 
             <TextView
                 android:id="@+id/usernameTextView"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginEnd="16dp"
                 android:ellipsize="end"
                 android:gravity="center"
                 android:lines="1"
                 android:textColor="@color/white"
                 android:textSize="20sp"
-                tools:text="Gym"
+                tools:text="Notes"
                 android:textStyle="bold"
                 android:textAllCaps="true"
                 android:shadowColor="@color/black"

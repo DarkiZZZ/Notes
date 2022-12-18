@@ -1,4 +1,4 @@
-package ru.msokolov.notesapp.screens.profile.change
+package ru.msokolov.notesapp.screens.note.edit
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -8,24 +8,24 @@ import android.view.View
 import android.view.ViewGroup
 import ru.msokolov.notesapp.R
 
-class ChangeProfileFragment : Fragment() {
+class EditNoteFragment : Fragment() {
 
     companion object {
-        fun newInstance() = ChangeProfileFragment()
+        fun newInstance() = EditNoteFragment()
     }
 
-    private lateinit var viewModel: ChangeProfileViewModel
+    private lateinit var viewModel: EditNoteViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_change_profile, container, false)
+        return inflater.inflate(R.layout.fragment_edit_note, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(ChangeProfileViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(EditNoteViewModel::class.java)
         // TODO: Use the ViewModel
     }
 
