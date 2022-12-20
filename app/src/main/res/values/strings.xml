@@ -3,7 +3,7 @@
     <string name="search">Search</string>
     <string name="sort_by_high_priority">Sort by High Priority</string>
     <string name="delete_all">Delete all</string>
-    <string name="enter_note">Enter note</string>
+    <string name="enter_title">Enter title</string>
     <string name="add">Add</string>
     <string name="update">Update</string>
     <string-array name="priorities">
