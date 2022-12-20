@@ -43,7 +43,8 @@ class NoteShowFragment : Fragment() {
         binding.viewModel = viewModel
 
         adapter = NoteAdapter(NoteClickListener { noteEntity ->
-            findNavController().navigate(NoteShowFragmentDirections.actionNoteShowFragmentToUpdateNoteFragment(noteEntity))
+            findNavController().navigate(NoteShowFragmentDirections
+                .actionNoteShowFragmentToUpdateNoteFragment(noteEntity))
         })
 
         lifecycleScope.launch{
@@ -73,12 +74,12 @@ class NoteShowFragment : Fragment() {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
-                val taskEntry = adapter.currentList[position]
-                viewModel.delete(taskEntry)
+                val noteEntity = adapter.currentList[position]
+                viewModel.delete(noteEntity)
 
                 Snackbar.make(binding.root, "Deleted!", Snackbar.LENGTH_LONG).apply {
                     setAction("Undo"){
-                        viewModel.insert(taskEntry)
+                        viewModel.insert(noteEntity)
                     }
                     show()
                 }

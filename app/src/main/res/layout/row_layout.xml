@@ -23,6 +23,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/row_background"
+            android:background="@color/note_title"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 

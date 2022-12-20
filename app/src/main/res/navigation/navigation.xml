@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/noteShowFragment"
         android:name="ru.msokolov.notesapp.ui.note.show.NoteShowFragment"
-        android:label="Kotlin MVVM ToDo List"
+        android:label="Notes"
         tools:layout="@layout/fragment_note_show" >
         <action
             android:id="@+id/action_noteShowFragment_to_addNoteFragment"
@@ -28,7 +28,7 @@
     <fragment
         android:id="@+id/addNoteFragment"
         android:name="ru.msokolov.notesapp.ui.note.add.AddNoteFragment"
-        android:label="Add"
+        android:label="Add new note"
         tools:layout="@layout/fragment_add_note" >
         <action
             android:id="@+id/action_addNoteFragment_to_noteShowFragment"
@@ -41,7 +41,7 @@
     <fragment
         android:id="@+id/updateNoteFragment"
         android:name="ru.msokolov.notesapp.ui.note.update.UpdateNoteFragment"
-        android:label="Update"
+        android:label="Update note"
         tools:layout="@layout/fragment_update_note" >
         <action
             android:id="@+id/action_updateNoteFragment_to_noteShowFragment"

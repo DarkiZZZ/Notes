@@ -30,14 +30,14 @@ class AddNoteFragment : Fragment() {
 
         binding = FragmentAddNoteBinding.inflate(inflater, container, false)
 
-        val myAdapter = ArrayAdapter(
+        val adapter = ArrayAdapter(
             requireContext(),
             android.R.layout.simple_spinner_dropdown_item,
             resources.getStringArray(R.array.priorities)
         )
 
         binding.apply {
-            spinner.adapter = myAdapter
+            spinner.adapter = adapter
             btnAdd.setOnClickListener {
                 if(TextUtils.isEmpty((edtTask.text))){
                     Toast.makeText(requireContext(), "It's empty!", Toast.LENGTH_SHORT).show()
