@@ -3,12 +3,14 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'kotlin-parcelize'
+    id 'dagger.hilt.android.plugin'
+    id 'androidx.navigation.safeargs.kotlin'
 }
 
 
 android {
     namespace 'ru.msokolov.notesapp'
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "ru.msokolov.notesapp"
@@ -40,6 +42,7 @@ android {
 }
 
 dependencies {
+
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.5.1'
