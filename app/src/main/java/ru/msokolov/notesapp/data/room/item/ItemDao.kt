@@ -16,7 +16,10 @@ interface ItemDao {
     suspend fun update(itemEntity: ItemEntity)
 
     @Query("DELETE FROM item_table WHERE parent_id =:noteId")
-    suspend fun deleteAll(noteId: Int)
+    suspend fun deleteAllByNoteId(noteId: Int)
+
+    @Query("DELETE FROM item_table")
+    suspend fun deleteAll()
 
     @Query("SELECT * FROM item_table WHERE parent_id =:noteId")
     fun getAllItems(noteId: Int): Flow<List<ItemEntity>>

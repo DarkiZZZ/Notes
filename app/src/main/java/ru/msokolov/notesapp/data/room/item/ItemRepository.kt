@@ -10,8 +10,12 @@ class ItemRepository @Inject constructor(private val itemDao: ItemDao) {
 
     suspend fun deleteItem(itemEntity: ItemEntity) = itemDao.delete(itemEntity)
 
-    suspend fun deleteAll(noteId: Int) {
-        itemDao.deleteAll(noteId)
+    suspend fun deleteAllByNoteId(noteId: Int) {
+        itemDao.deleteAllByNoteId(noteId)
+    }
+
+    suspend fun deleteAll(){
+        itemDao.deleteAll()
     }
 
     fun getAllItems(noteId: Int) = itemDao.getAllItems(noteId)
