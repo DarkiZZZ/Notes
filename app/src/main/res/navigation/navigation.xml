@@ -24,9 +24,6 @@
             app:exitAnim="@anim/to_right"
             app:popEnterAnim="@anim/from_right"
             app:popExitAnim="@anim/to_left" />
-        <argument
-            android:name="updatedNote"
-            app:argType="ru.msokolov.notesapp.data.room.note.NoteEntity" />
     </fragment>
     <fragment
         android:id="@+id/addNoteFragment"
