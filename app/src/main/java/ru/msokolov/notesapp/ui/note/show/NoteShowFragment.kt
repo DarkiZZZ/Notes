@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package ru.msokolov.notesapp.ui.note.show
 
 import android.annotation.SuppressLint
@@ -14,7 +16,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
@@ -23,7 +24,6 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import ru.msokolov.notesapp.R
 import ru.msokolov.notesapp.databinding.FragmentNoteShowBinding
-import ru.msokolov.notesapp.ui.note.update.UpdateNoteFragmentArgs
 
 @AndroidEntryPoint
 class NoteShowFragment : Fragment() {
@@ -33,10 +33,7 @@ class NoteShowFragment : Fragment() {
 
     private lateinit var binding: FragmentNoteShowBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
 
-    }
     @SuppressLint("UnsafeRepeatOnLifecycleDetector")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -93,6 +90,7 @@ class NoteShowFragment : Fragment() {
                 }
             }
         }).attachToRecyclerView(binding.recyclerView)
+
 
         setHasOptionsMenu(true)
 
