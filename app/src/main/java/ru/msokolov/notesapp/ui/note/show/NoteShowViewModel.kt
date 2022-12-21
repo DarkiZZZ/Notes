@@ -5,13 +5,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import ru.msokolov.notesapp.data.room.item.ItemRepository
 import ru.msokolov.notesapp.data.room.note.NoteRepository
 import ru.msokolov.notesapp.data.room.note.NoteEntity
 import javax.inject.Inject
 
 @HiltViewModel
 class NoteShowViewModel @Inject constructor(
-    private val noteRepository : NoteRepository
+    private val noteRepository : NoteRepository,
+    private val itemRepository: ItemRepository
 ) : ViewModel(){
 
 
@@ -26,16 +28,20 @@ class NoteShowViewModel @Inject constructor(
         noteRepository.deleteItem(noteEntity)
     }
 
-    fun updateNote(noteEntity: NoteEntity) = viewModelScope.launch{
-        noteRepository.updateData(noteEntity)
-    }
-
     fun deleteAllNotes() = viewModelScope.launch{
         noteRepository.deleteAll()
     }
 
     fun searchDatabaseForNotes(searchQuery: String): LiveData<List<NoteEntity>> {
         return noteRepository.searchDatabase(searchQuery)
+    }
+
+    fun deleteAllItems() = viewModelScope.launch {
+        itemRepository.deleteAll()
+    }
+
+    fun deleteAllByNoteId(noteId: Int) = viewModelScope.launch {
+        itemRepository.deleteAllByNoteId(noteId)
     }
 
 }

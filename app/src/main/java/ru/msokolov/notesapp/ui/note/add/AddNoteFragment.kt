@@ -83,7 +83,7 @@ class AddNoteFragment : Fragment() {
 
                 Toast.makeText(requireContext(), "Successfully added!", Toast.LENGTH_SHORT).show()
                 findNavController().navigate(AddNoteFragmentDirections
-                    .actionAddNoteFragmentToNoteShowFragment(noteEntity))
+                    .actionAddNoteFragmentToNoteShowFragment())
             }
         }
         return binding.root

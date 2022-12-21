@@ -81,6 +81,7 @@ class NoteShowFragment : Fragment() {
                 val position = viewHolder.adapterPosition
                 val noteEntity = adapter.currentList[position]
                 viewModel.deleteNote(noteEntity)
+                viewModel.deleteAllByNoteId(noteEntity.id)
 
                 Snackbar.make(binding.root, "Deleted!", Snackbar.LENGTH_LONG).apply {
                     setAction("Undo"){
@@ -160,6 +161,7 @@ class NoteShowFragment : Fragment() {
             .setMessage("Are you sure?")
             .setPositiveButton("Yes"){dialog, _ ->
                 viewModel.deleteAllNotes()
+                viewModel.deleteAllItems()
                 dialog.dismiss()
             }.setNegativeButton("No"){dialog, _ ->
                 dialog.dismiss()

@@ -2,7 +2,6 @@ package ru.msokolov.notesapp.ui.note.update
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.room.PrimaryKey
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import ru.msokolov.notesapp.data.room.item.ItemEntity
@@ -34,7 +33,7 @@ class UpdateNoteViewModel @Inject constructor(
     }
 
     fun deleteAllItemsOfCurrentNote(currentNoteId: Int) = viewModelScope.launch {
-        itemRepository.deleteAll(currentNoteId)
+        itemRepository.deleteAllByNoteId(currentNoteId)
     }
 
     fun editNote(noteEntity: NoteEntity) = viewModelScope.launch {

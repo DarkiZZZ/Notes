@@ -124,7 +124,7 @@ class UpdateNoteFragment : Fragment() {
 
                 Toast.makeText(requireContext(), "Updated!", Toast.LENGTH_SHORT).show()
                 findNavController().navigate(UpdateNoteFragmentDirections
-                    .actionUpdateNoteFragmentToNoteShowFragment(noteEntity))
+                    .actionUpdateNoteFragmentToNoteShowFragment())
             }
         }
         return binding.root
