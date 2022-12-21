@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="ru.msokolov.notesapp.ui.note.show.NoteViewModel" />
+            type="ru.msokolov.notesapp.ui.note.show.NoteShowViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

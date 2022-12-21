@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="viewModel"
+            type="ru.msokolov.notesapp.ui.note.update.UpdateNoteViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -67,7 +69,7 @@
             app:layout_constraintBottom_toBottomOf="parent"/>
 
         <ImageView
-            android:id="@+id/add_item"
+            android:id="@+id/btn_add_item"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/ic_add"

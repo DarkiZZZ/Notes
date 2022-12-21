@@ -8,22 +8,33 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import ru.msokolov.notesapp.R
-import ru.msokolov.notesapp.data.room.NoteEntity
+import kotlinx.coroutines.launch
+import ru.msokolov.notesapp.data.room.item.ItemEntity
+import ru.msokolov.notesapp.data.room.note.NoteEntity
 import ru.msokolov.notesapp.databinding.FragmentUpdateNoteBinding
-import ru.msokolov.notesapp.ui.note.show.NoteViewModel
+import ru.msokolov.notesapp.ui.item.CustomInputDialogFragment
+import ru.msokolov.notesapp.ui.item.CustomInputDialogListener
 
 @AndroidEntryPoint
 class UpdateNoteFragment : Fragment() {
 
-    private val viewModel: NoteViewModel by viewModels()
+    private val updateViewModel: UpdateNoteViewModel by viewModels()
 
     private lateinit var binding: FragmentUpdateNoteBinding
+    private lateinit var adapter: ItemAdapter
 
     private val args by navArgs<UpdateNoteFragmentArgs>()
+
+    private lateinit var currentItemClicked: ItemEntity
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,10 +42,67 @@ class UpdateNoteFragment : Fragment() {
     ): View {
 
         binding = FragmentUpdateNoteBinding.inflate(inflater, container, false)
+        binding.lifecycleOwner = this
+        binding.viewModel = updateViewModel
+        updateViewModel.currentNoteId = args.currentNote.id
+
+        adapter = ItemAdapter(ItemClickListener { itemEntity ->
+            showCustomInputDialogFragment(KEY_UPDATE_REQUEST_KEY, itemEntity.text)
+        })
+
+        lifecycleScope.launch{
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED){
+                updateViewModel.getAllItems.collect{ items ->
+                    adapter.submitList(items)
+                }
+            }
+        }
+
+        setupCustomInputDialogFragmentListeners()
+
+        //update
+
+
+
+        binding.recyclerView.adapter = adapter
+
+        ItemTouchHelper(object  : ItemTouchHelper.SimpleCallback(0,
+            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT){
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.adapterPosition
+                val itemEntity = adapter.currentList[position]
+                updateViewModel.deleteItem(itemEntity)
+
+                Snackbar.make(binding.root, "Deleted!", Snackbar.LENGTH_LONG).apply {
+                    setAction("Undo"){
+                        updateViewModel.insertItem(itemEntity)
+                    }
+                    show()
+                }
+            }
+        }).attachToRecyclerView(binding.recyclerView)
+
+        //Создаем dialogFragment с пустым editView(add)
+        binding.btnAddItem.setOnClickListener {
+            currentItemClicked = ItemEntity(
+                0,
+                args.currentNote.id,
+                ""
+            )
+            showCustomInputDialogFragment(KEY_UPDATE_REQUEST_KEY, "")
+        }
 
         binding.apply {
-            updateEdtTask.setText(args.note.title)
-            updateSpinner.setSelection(args.note.priority)
+            updateEdtTask.setText(args.currentNote.title)
+            updateSpinner.setSelection(args.currentNote.priority)
 
             btnUpdate.setOnClickListener {
                 if(TextUtils.isEmpty(updateEdtTask.text)){
@@ -42,22 +110,52 @@ class UpdateNoteFragment : Fragment() {
                     return@setOnClickListener
                 }
 
-                val taskTitle = updateEdtTask.text.toString()
+                val noteTitle = updateEdtTask.text.toString()
                 val priority = updateSpinner.selectedItemPosition
 
-                val taskEntry = NoteEntity(
-                    args.note.id,
-                    taskTitle,
+                val noteEntity = NoteEntity(
+                    args.currentNote.id,
+                    noteTitle,
                     priority,
-                    args.note.timestamp
+                    args.currentNote.timestamp
                 )
 
-                viewModel.update(taskEntry)
+                updateViewModel.editNote(noteEntity)
+
                 Toast.makeText(requireContext(), "Updated!", Toast.LENGTH_SHORT).show()
-                findNavController().navigate(R.id.action_updateNoteFragment_to_noteShowFragment)
+                findNavController().navigate(UpdateNoteFragmentDirections
+                    .actionUpdateNoteFragmentToNoteShowFragment(noteEntity))
             }
         }
         return binding.root
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(KEY_TEXT, currentItemClicked.text)
+    }
+
+    private fun showCustomInputDialogFragment(requestKey: String, text: String) {
+        CustomInputDialogFragment.show(parentFragmentManager, text, requestKey)
+    }
+
+    private fun setupCustomInputDialogFragmentListeners() {
+        val listener: CustomInputDialogListener = { requestKey, text ->
+            when (requestKey) {
+                KEY_UPDATE_REQUEST_KEY-> {
+                    currentItemClicked.text = text
+                    updateViewModel.insertItem(itemEntity = currentItemClicked)
+                }
+            }
+        }
+        CustomInputDialogFragment.setupListener(parentFragmentManager, this, KEY_UPDATE_REQUEST_KEY, listener)
+    }
+
+
+
+
+    companion object {
+        @JvmStatic private val KEY_UPDATE_REQUEST_KEY = "KEY_TEXT_UPDATE_REQUEST_KEY"
+        @JvmStatic private val KEY_TEXT = "KEY_TEXT"
+    }
 }

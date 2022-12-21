@@ -1,8 +1,6 @@
-package ru.msokolov.notesapp.data
+package ru.msokolov.notesapp.data.room.note
 
 import androidx.lifecycle.LiveData
-import ru.msokolov.notesapp.data.room.NoteDao
-import ru.msokolov.notesapp.data.room.NoteEntity
 import javax.inject.Inject
 
 class NoteRepository @Inject constructor(private val noteDao: NoteDao){
@@ -16,9 +14,9 @@ class NoteRepository @Inject constructor(private val noteDao: NoteDao){
         noteDao.deleteAll()
     }
 
-    fun getAllTasks() = noteDao.getAllTasks()
+    fun getAllNotes() = noteDao.getAllNotes()
 
-    fun getAllPriorityTasks() = noteDao.getAllPriorityTasks()
+    fun getAllPriorityNotes() = noteDao.getAllPriorityNotes()
 
     fun searchDatabase(searchQuery: String): LiveData<List<NoteEntity>> {
         return noteDao.searchDatabase(searchQuery)

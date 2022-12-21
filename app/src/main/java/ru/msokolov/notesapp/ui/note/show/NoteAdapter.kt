@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import ru.msokolov.notesapp.data.room.NoteEntity
-import ru.msokolov.notesapp.databinding.RowLayoutBinding
+import ru.msokolov.notesapp.data.room.note.NoteEntity
+import ru.msokolov.notesapp.databinding.NoteLayoutBinding
 
 class NoteAdapter(private val clickListener: NoteClickListener):
     ListAdapter<NoteEntity, NoteAdapter.ViewHolder>(TaskDiffCallback) {
@@ -16,17 +16,18 @@ class NoteAdapter(private val clickListener: NoteClickListener):
         override fun areContentsTheSame(oldItem: NoteEntity, newItem: NoteEntity) = oldItem == newItem
     }
 
-    class ViewHolder(private val binding: RowLayoutBinding):
+    class ViewHolder(private val binding: NoteLayoutBinding):
         RecyclerView.ViewHolder(binding.root) {
         fun bind(noteEntity: NoteEntity, clickListener: NoteClickListener){
             binding.noteEntity = noteEntity
             binding.clickListener = clickListener
             binding.executePendingBindings()
         }
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(RowLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        return ViewHolder(NoteLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -37,6 +38,6 @@ class NoteAdapter(private val clickListener: NoteClickListener):
     }
 }
 
-class NoteClickListener(val clickListener: (taskEntry: NoteEntity) -> Unit){
+class NoteClickListener(val clickListener: (noteEntity: NoteEntity) -> Unit){
     fun onClick(noteEntry: NoteEntity) = clickListener(noteEntry)
 }
