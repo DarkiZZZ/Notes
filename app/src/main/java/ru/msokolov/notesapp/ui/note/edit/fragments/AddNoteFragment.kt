@@ -174,6 +174,9 @@ class AddNoteFragment : Fragment() {
         if(args.currentNote.title.isBlank()){
             editViewModel.deleteNote(args.currentNote)
         }
+        Thread.sleep(200)
         super.onStop()
     }
+
+
 }

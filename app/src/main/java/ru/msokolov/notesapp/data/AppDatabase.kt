@@ -8,7 +8,7 @@ import ru.msokolov.notesapp.data.room.note.NoteDao
 import ru.msokolov.notesapp.data.room.note.NoteEntity
 
 @Database(entities = [NoteEntity::class, ItemEntity::class],
-    version = 14,
+    version = 16,
 exportSchema = false)
 abstract class AppDatabase: RoomDatabase() {
     abstract fun getNoteDao(): NoteDao

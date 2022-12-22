@@ -75,8 +75,11 @@ class NoteShowFragment : Fragment() {
                 timestamp = timestamp)
                 showViewModel.editNote(note)
 
+                Thread.sleep(200)
+
                 CoroutineScope(Main).launch {
                     var currentNote = showViewModel.getLastFetchedNote()
+
                     if (currentNote == null){
                         currentNote = note
                         findNavController().navigate(NoteShowFragmentDirections
