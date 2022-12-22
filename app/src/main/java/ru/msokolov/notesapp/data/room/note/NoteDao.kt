@@ -8,16 +8,16 @@ import kotlinx.coroutines.flow.Flow
 interface NoteDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(noteEntity: NoteEntity)
+    suspend fun insertOrUpdate(noteEntity: NoteEntity)
 
     @Delete
     suspend fun delete(noteEntity: NoteEntity)
 
-    @Update
-    suspend fun update(noteEntity: NoteEntity)
-
     @Query("DELETE FROM note_table")
-    suspend fun deleteAll()
+    suspend fun deleteAllData()
+
+    @Query("SELECT * FROM note_table WHERE timestamp = (SELECT MAX(timestamp) FROM note_table) ")
+    fun getLastFetchedNote(): LiveData<NoteEntity>
 
     @Query("SELECT * FROM note_table ORDER BY timestamp DESC")
     fun getAllNotes(): Flow<List<NoteEntity>>

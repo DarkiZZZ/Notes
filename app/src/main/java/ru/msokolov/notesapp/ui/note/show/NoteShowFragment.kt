@@ -23,16 +23,16 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import ru.msokolov.notesapp.R
+import ru.msokolov.notesapp.data.room.note.NoteEntity
 import ru.msokolov.notesapp.databinding.FragmentNoteShowBinding
 
 @AndroidEntryPoint
 class NoteShowFragment : Fragment() {
 
-    private val viewModel: NoteShowViewModel by viewModels()
+    private val showViewModel: NoteShowViewModel by viewModels()
     private lateinit var adapter: NoteAdapter
 
     private lateinit var binding: FragmentNoteShowBinding
-
 
     @SuppressLint("UnsafeRepeatOnLifecycleDetector")
     override fun onCreateView(
@@ -43,18 +43,17 @@ class NoteShowFragment : Fragment() {
         binding = FragmentNoteShowBinding.inflate(inflater, container, false)
 
         binding.lifecycleOwner = this
-        binding.viewModel = viewModel
+        binding.viewModel = showViewModel
 
 
         adapter = NoteAdapter(NoteClickListener { noteEntity ->
-
             findNavController().navigate(NoteShowFragmentDirections
                 .actionNoteShowFragmentToUpdateNoteFragment(noteEntity))
         })
 
         lifecycleScope.launch{
             repeatOnLifecycle(Lifecycle.State.STARTED){
-                viewModel.getAllNotes.collect{ notes ->
+                showViewModel.getAllNotes.collect{ notes ->
                     adapter.submitList(notes)
                 }
             }
@@ -80,12 +79,12 @@ class NoteShowFragment : Fragment() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
                 val noteEntity = adapter.currentList[position]
-                viewModel.deleteNote(noteEntity)
-                viewModel.deleteAllByNoteId(noteEntity.id)
+                showViewModel.deleteNote(noteEntity)
+                showViewModel.deleteAllByNoteId(noteEntity.id)
 
                 Snackbar.make(binding.root, "Deleted!", Snackbar.LENGTH_LONG).apply {
                     setAction("Undo"){
-                        viewModel.insertNote(noteEntity)
+                        showViewModel.insertNote(noteEntity)
                     }
                     show()
                 }
@@ -133,7 +132,7 @@ class NoteShowFragment : Fragment() {
 
     fun runQuery(query: String){
         val searchQuery = "%$query%"
-        viewModel.searchDatabaseForNotes(searchQuery).observe(viewLifecycleOwner) { tasks ->
+        showViewModel.searchDatabaseForNotes(searchQuery).observe(viewLifecycleOwner) { tasks ->
             adapter.submitList(tasks)
         }
     }
@@ -144,7 +143,7 @@ class NoteShowFragment : Fragment() {
             R.id.action_priority -> {
                 lifecycleScope.launch{
                     repeatOnLifecycle(Lifecycle.State.STARTED){
-                        viewModel.getAllPriorityNotes.collectLatest { tasks ->
+                        showViewModel.getAllPriorityNotes.collectLatest { tasks ->
                             adapter.submitList(tasks)
                         }
                     }
@@ -160,8 +159,7 @@ class NoteShowFragment : Fragment() {
             .setTitle("Delete All")
             .setMessage("Are you sure?")
             .setPositiveButton("Yes"){dialog, _ ->
-                viewModel.deleteAllNotes()
-                viewModel.deleteAllItems()
+                showViewModel.deleteAllData()
                 dialog.dismiss()
             }.setNegativeButton("No"){dialog, _ ->
                 dialog.dismiss()

@@ -1,5 +1,6 @@
-package ru.msokolov.notesapp.ui.item
+package ru.msokolov.notesapp.ui.note.edit
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
@@ -37,11 +38,11 @@ class CustomInputDialogFragment : DialogFragment() {
 
     /**
      * Функция для создания диалогового окна
-     * @param[savedInstanceState] -
      */
+    @SuppressLint("DialogFragmentCallbacksDetector")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialogBinding = TextItemInputBinding.inflate(layoutInflater)
-        dialogBinding.itemInputEditText.setText(text.toString())
+        dialogBinding.itemInputEditText.setText(text)
 
         /**
          * Создаем диалоговое окно, определяем параметры

@@ -10,7 +10,7 @@
 
         <variable
             name="clickListener"
-            type="ru.msokolov.notesapp.ui.note.update.ItemClickListener" />
+            type="ru.msokolov.notesapp.ui.note.edit.ItemClickListener" />
     </data>
 
     <androidx.cardview.widget.CardView

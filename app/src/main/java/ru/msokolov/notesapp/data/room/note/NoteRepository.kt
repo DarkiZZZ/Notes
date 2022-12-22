@@ -4,14 +4,13 @@ import androidx.lifecycle.LiveData
 import javax.inject.Inject
 
 class NoteRepository @Inject constructor(private val noteDao: NoteDao){
-    suspend fun insert(noteEntity: NoteEntity) = noteDao.insert(noteEntity)
 
-    suspend fun updateData(noteEntity: NoteEntity) = noteDao.update(noteEntity)
+    suspend fun insertOrUpdate(noteEntity: NoteEntity) = noteDao.insertOrUpdate(noteEntity)
 
-    suspend fun deleteItem(noteEntity: NoteEntity) = noteDao.delete(noteEntity)
+    suspend fun deleteNote(noteEntity: NoteEntity) = noteDao.delete(noteEntity)
 
     suspend fun deleteAll() {
-        noteDao.deleteAll()
+        noteDao.deleteAllData()
     }
 
     fun getAllNotes() = noteDao.getAllNotes()
@@ -20,5 +19,9 @@ class NoteRepository @Inject constructor(private val noteDao: NoteDao){
 
     fun searchDatabase(searchQuery: String): LiveData<List<NoteEntity>> {
         return noteDao.searchDatabase(searchQuery)
+    }
+
+    fun getLastFetchedNote(): LiveData<NoteEntity>{
+        return noteDao.getLastFetchedNote()
     }
 }

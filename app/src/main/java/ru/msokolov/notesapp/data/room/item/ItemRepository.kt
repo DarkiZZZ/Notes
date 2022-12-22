@@ -4,20 +4,17 @@ import javax.inject.Inject
 
 class ItemRepository @Inject constructor(private val itemDao: ItemDao) {
 
-    suspend fun insert(itemEntity: ItemEntity) = itemDao.insert(itemEntity)
-
-    suspend fun updateData(itemEntity: ItemEntity) = itemDao.update(itemEntity)
+    suspend fun insertOrUpdate(itemEntity: ItemEntity) = itemDao.insertOrUpdate(itemEntity)
 
     suspend fun deleteItem(itemEntity: ItemEntity) = itemDao.delete(itemEntity)
 
     suspend fun deleteAllByNoteId(noteId: Int) {
-        itemDao.deleteAllByNoteId(noteId)
+        itemDao.deleteAllDataByNoteId(noteId)
     }
 
-    suspend fun deleteAll(){
-        itemDao.deleteAll()
+    suspend fun deleteAllData(){
+        itemDao.deleteAllData()
     }
 
-    fun getAllItems(noteId: Int) = itemDao.getAllItems(noteId)
-
+    fun getAllItemsByNoteId(noteId: Int) = itemDao.getAllItemsByNoteId(noteId)
 }

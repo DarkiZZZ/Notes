@@ -6,13 +6,13 @@
     <data>
         <variable
             name="viewModel"
-            type="ru.msokolov.notesapp.ui.note.update.UpdateNoteViewModel" />
+            type="ru.msokolov.notesapp.ui.note.edit.EditNoteViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.note.update.UpdateNoteFragment">
+        tools:context=".ui.note.edit.fragments.UpdateNoteFragment">
 
         <EditText
             android:id="@+id/update_edt_task"

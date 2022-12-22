@@ -39,5 +39,5 @@ class NoteAdapter(private val clickListener: NoteClickListener):
 }
 
 class NoteClickListener(val clickListener: (noteEntity: NoteEntity) -> Unit){
-    fun onClick(noteEntry: NoteEntity) = clickListener(noteEntry)
+    fun onClick(noteEntity: NoteEntity) = clickListener(noteEntity)
 }

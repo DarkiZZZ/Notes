@@ -1,4 +1,4 @@
-package ru.msokolov.notesapp.ui.note.update
+package ru.msokolov.notesapp.ui.note.edit
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

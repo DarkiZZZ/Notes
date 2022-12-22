@@ -11,37 +11,19 @@
         android:label="Notes"
         tools:layout="@layout/fragment_note_show" >
         <action
-            android:id="@+id/action_noteShowFragment_to_addNoteFragment"
-            app:destination="@id/addNoteFragment"
-            app:enterAnim="@anim/from_right"
-            app:exitAnim="@anim/to_left"
-            app:popEnterAnim="@anim/from_left"
-            app:popExitAnim="@anim/to_right" />
-        <action
             android:id="@+id/action_noteShowFragment_to_updateNoteFragment"
             app:destination="@id/updateNoteFragment"
             app:enterAnim="@anim/from_left"
             app:exitAnim="@anim/to_right"
             app:popEnterAnim="@anim/from_right"
             app:popExitAnim="@anim/to_left" />
-    </fragment>
-    <fragment
-        android:id="@+id/addNoteFragment"
-        android:name="ru.msokolov.notesapp.ui.note.add.AddNoteFragment"
-        android:label="Add new note"
-        tools:layout="@layout/fragment_add_note" >
         <action
-            android:id="@+id/action_addNoteFragment_to_noteShowFragment"
-            app:destination="@id/noteShowFragment"
-            app:enterAnim="@anim/from_left"
-            app:exitAnim="@anim/to_right"
-            app:popUpTo="@id/noteShowFragment"
-            app:popUpToInclusive="true" />
-
+            android:id="@+id/action_noteShowFragment_to_addNoteFragment"
+            app:destination="@id/addNoteFragment" />
     </fragment>
     <fragment
         android:id="@+id/updateNoteFragment"
-        android:name="ru.msokolov.notesapp.ui.note.update.UpdateNoteFragment"
+        android:name="ru.msokolov.notesapp.ui.note.edit.fragments.UpdateNoteFragment"
         android:label="Update note"
         tools:layout="@layout/fragment_update_note" >
         <action
@@ -54,5 +36,18 @@
         <argument
             android:name="currentNote"
             app:argType="ru.msokolov.notesapp.data.room.note.NoteEntity" />
+    </fragment>
+    <fragment
+        android:id="@+id/addNoteFragment"
+        android:name="ru.msokolov.notesapp.ui.note.edit.fragments.AddNoteFragment"
+        android:label="Add note"
+        tools:layout="@layout/fragment_add_note">
+        <action
+            android:id="@+id/action_addNoteFragment_to_noteShowFragment"
+            app:destination="@id/noteShowFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popUpTo="@id/noteShowFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>

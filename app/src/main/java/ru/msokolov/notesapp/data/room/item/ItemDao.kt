@@ -7,21 +7,17 @@ import kotlinx.coroutines.flow.Flow
 interface ItemDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(itemEntity: ItemEntity)
+    suspend fun insertOrUpdate(itemEntity: ItemEntity)
 
     @Delete
     suspend fun delete(itemEntity: ItemEntity)
 
-    @Update
-    suspend fun update(itemEntity: ItemEntity)
-
     @Query("DELETE FROM item_table WHERE parent_id =:noteId")
-    suspend fun deleteAllByNoteId(noteId: Int)
+    suspend fun deleteAllDataByNoteId(noteId: Int)
 
     @Query("DELETE FROM item_table")
-    suspend fun deleteAll()
+    suspend fun deleteAllData()
 
     @Query("SELECT * FROM item_table WHERE parent_id =:noteId")
-    fun getAllItems(noteId: Int): Flow<List<ItemEntity>>
-
+    fun getAllItemsByNoteId(noteId: Int): Flow<List<ItemEntity>>
 }

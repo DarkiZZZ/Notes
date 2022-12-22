@@ -20,28 +20,26 @@ class NoteShowViewModel @Inject constructor(
     val getAllNotes = noteRepository.getAllNotes()
     val getAllPriorityNotes = noteRepository.getAllPriorityNotes()
 
+
     fun insertNote(noteEntity: NoteEntity) = viewModelScope.launch {
-        noteRepository.insert(noteEntity)
+        noteRepository.insertOrUpdate(noteEntity)
     }
 
     fun deleteNote(noteEntity: NoteEntity) = viewModelScope.launch{
-        noteRepository.deleteItem(noteEntity)
-    }
-
-    fun deleteAllNotes() = viewModelScope.launch{
-        noteRepository.deleteAll()
+        noteRepository.deleteNote(noteEntity)
     }
 
     fun searchDatabaseForNotes(searchQuery: String): LiveData<List<NoteEntity>> {
         return noteRepository.searchDatabase(searchQuery)
     }
 
-    fun deleteAllItems() = viewModelScope.launch {
-        itemRepository.deleteAll()
-    }
-
     fun deleteAllByNoteId(noteId: Int) = viewModelScope.launch {
         itemRepository.deleteAllByNoteId(noteId)
     }
 
+    fun deleteAllData() = viewModelScope.launch {
+        noteRepository.deleteAll()
+        itemRepository.deleteAllData()
+        /*noteItemRepository.deleteAllData()*/
+    }
 }
