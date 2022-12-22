@@ -32,10 +32,6 @@ class EditNoteViewModel @Inject constructor(
         noteRepository.insertOrUpdate(noteEntity)
     }
 
-    fun getLastFetchedNote(): LiveData<NoteEntity> {
-        return noteRepository.getLastFetchedNote()
-    }
-
     fun deleteNote(noteEntity: NoteEntity) = viewModelScope.launch {
         noteRepository.deleteNote(noteEntity)
         itemRepository.deleteAllByNoteId(noteEntity.id)

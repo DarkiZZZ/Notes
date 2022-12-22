@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import ru.msokolov.notesapp.data.room.item.ItemRepository
 import ru.msokolov.notesapp.data.room.note.NoteRepository
@@ -21,7 +23,7 @@ class NoteShowViewModel @Inject constructor(
     val getAllPriorityNotes = noteRepository.getAllPriorityNotes()
 
 
-    fun insertNote(noteEntity: NoteEntity) = viewModelScope.launch {
+    fun editNote(noteEntity: NoteEntity) = viewModelScope.launch {
         noteRepository.insertOrUpdate(noteEntity)
     }
 
@@ -40,6 +42,12 @@ class NoteShowViewModel @Inject constructor(
     fun deleteAllData() = viewModelScope.launch {
         noteRepository.deleteAll()
         itemRepository.deleteAllData()
-        /*noteItemRepository.deleteAllData()*/
+    }
+
+    suspend fun getLastFetchedNote(): NoteEntity{
+        val deferred: Deferred<NoteEntity> = viewModelScope.async {
+           noteRepository.getLastFetchedNote()
+        }
+        return deferred.await()
     }
 }

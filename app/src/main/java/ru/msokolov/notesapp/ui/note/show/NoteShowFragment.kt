@@ -20,6 +20,9 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import ru.msokolov.notesapp.R
@@ -62,7 +65,31 @@ class NoteShowFragment : Fragment() {
         binding.apply {
             recyclerView.adapter = adapter
             floatingActionButton.setOnClickListener {
-                findNavController().navigate(R.id.action_noteShowFragment_to_addNoteFragment)
+                val title: String = ""
+                val priority:Int = 0
+                val timestamp:Long = System.currentTimeMillis()
+            val note = NoteEntity(
+                id = 0,
+                title = title,
+                priority = priority,
+                timestamp = timestamp)
+                showViewModel.editNote(note)
+
+                CoroutineScope(Main).launch {
+                    var currentNote = showViewModel.getLastFetchedNote()
+                    if (currentNote == null){
+                        currentNote = note
+                        findNavController().navigate(NoteShowFragmentDirections
+                            .actionNoteShowFragmentToAddNoteFragment(currentNote))
+                    }
+                    else{
+                        findNavController().navigate(NoteShowFragmentDirections
+                            .actionNoteShowFragmentToAddNoteFragment(currentNote))
+                    }
+
+                }
+
+
             }
         }
 
@@ -84,7 +111,7 @@ class NoteShowFragment : Fragment() {
 
                 Snackbar.make(binding.root, "Deleted!", Snackbar.LENGTH_LONG).apply {
                     setAction("Undo"){
-                        showViewModel.insertNote(noteEntity)
+                        showViewModel.editNote(noteEntity)
                     }
                     show()
                 }

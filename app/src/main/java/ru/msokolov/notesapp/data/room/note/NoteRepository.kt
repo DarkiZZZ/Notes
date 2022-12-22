@@ -21,7 +21,7 @@ class NoteRepository @Inject constructor(private val noteDao: NoteDao){
         return noteDao.searchDatabase(searchQuery)
     }
 
-    fun getLastFetchedNote(): LiveData<NoteEntity>{
+    suspend fun getLastFetchedNote(): NoteEntity{
         return noteDao.getLastFetchedNote()
     }
 }

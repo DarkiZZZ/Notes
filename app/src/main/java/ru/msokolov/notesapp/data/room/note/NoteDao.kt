@@ -17,7 +17,7 @@ interface NoteDao {
     suspend fun deleteAllData()
 
     @Query("SELECT * FROM note_table WHERE timestamp = (SELECT MAX(timestamp) FROM note_table) ")
-    fun getLastFetchedNote(): LiveData<NoteEntity>
+    suspend fun getLastFetchedNote(): NoteEntity
 
     @Query("SELECT * FROM note_table ORDER BY timestamp DESC")
     fun getAllNotes(): Flow<List<NoteEntity>>

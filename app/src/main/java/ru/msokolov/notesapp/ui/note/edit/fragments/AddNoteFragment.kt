@@ -15,6 +15,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -36,7 +37,8 @@ class AddNoteFragment : Fragment() {
     private lateinit var itemAdapter: ItemAdapter
 
     private lateinit var currentItemClicked: ItemEntity
-    private lateinit var currentNote: NoteEntity
+
+    private val args by navArgs<AddNoteFragmentArgs>()
 
     @SuppressLint("UnsafeRepeatOnLifecycleDetector")
     override fun onCreateView(
@@ -48,30 +50,20 @@ class AddNoteFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.viewModel = editViewModel
 
-        currentNote = NoteEntity(
-                id = 0,
-                title = "",
-                priority = 0,
-                timestamp = System.currentTimeMillis())
-        editViewModel.editNote(currentNote)
-
-        editViewModel.getLastFetchedNote().observe(viewLifecycleOwner) { note ->
-            currentNote = note
-        }
         itemAdapter = ItemAdapter(ItemClickListener { itemEntity ->
             currentItemClicked = itemEntity
             showCustomInputDialogFragment(KEY_ADD_REQUEST_KEY, itemEntity.text)
         })
         lifecycleScope.launch{
             repeatOnLifecycle(Lifecycle.State.STARTED){
-                editViewModel.getAllItemsByNoteId(currentNote.id).collect{ items ->
+                editViewModel.getAllItemsByNoteId(args.currentNote.id).collect{ items ->
                     itemAdapter.submitList(items)
                 }
             }
         }
         lifecycleScope.launch{
             repeatOnLifecycle(Lifecycle.State.RESUMED){
-                editViewModel.getAllItemsByNoteId(currentNote.id).collect{ items ->
+                editViewModel.getAllItemsByNoteId(args.currentNote.id).collect{ items ->
                     itemAdapter.submitList(items)
                 }
             }
@@ -109,7 +101,7 @@ class AddNoteFragment : Fragment() {
         binding.btnAddItem.setOnClickListener {
             currentItemClicked = ItemEntity(
                 0,
-                currentNote.id,
+                args.currentNote.id,
                 ""
             )
             showCustomInputDialogFragment(KEY_ADD_REQUEST_KEY, "")
@@ -128,10 +120,10 @@ class AddNoteFragment : Fragment() {
                     return@setOnClickListener
                 }
 
-                currentNote.title = edtTask.text.toString()
-                currentNote.priority = spinner.selectedItemPosition
+                args.currentNote.title = edtTask.text.toString()
+                args.currentNote.priority = spinner.selectedItemPosition
 
-                editViewModel.editNote(currentNote)
+                editViewModel.editNote(args.currentNote)
 
                 Toast.makeText(requireContext(), "Successfully added!", Toast.LENGTH_SHORT).show()
                 findNavController().navigate(AddNoteFragmentDirections
@@ -179,8 +171,8 @@ class AddNoteFragment : Fragment() {
     }
 
     override fun onStop() {
-        if(currentNote.title.isBlank()){
-            editViewModel.deleteNote(currentNote)
+        if(args.currentNote.title.isBlank()){
+            editViewModel.deleteNote(args.currentNote)
         }
         super.onStop()
     }
